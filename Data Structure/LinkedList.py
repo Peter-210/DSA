@@ -1,5 +1,3 @@
-# https://www.geeksforgeeks.org/python/python-linked-list/
-
 class Node:
     def __init__(self, value):
         self.value = value
@@ -87,29 +85,53 @@ class LinkedList:
             prev.next = None
             return curr.value
 
-    def pop(self, pos):
+    def popAtIndex(self, pos):
         '''Removes an element from the linked list based on the specified index'''
-        pass
-        # if pos > self.length - 1:
-        #     raise Exception("Index of out bounds")
+        if pos > self.length - 1:
+            raise Exception("Index of out bounds")
         
-        # if pos == 0:
-        #     return self.remove()
-        # elif pos == self.length - 1:
-        #     return self.pop()
-        # else:
-        #     curr = self.head
-        #     for _ in range(pos-1):
-        #         curr = curr.next
+        if pos == 0:
+            return self.remove()
+        elif pos == self.length - 1:
+            return self.pop()
+        else:
+            self.length -= 1
+            curr = self.head
+            for _ in range(pos-1):
+                curr = curr.next
             
-        #     tempNode = curr.next
-        #     curr.next = Node(value)
-        #     curr.next.next = tempNode
+            value = curr.next.value
+            curr.next = curr.next.next
+            return value
+
+    def update(self, pos, value):
+        '''Update an element in the linked list based on the specified index'''
+        if pos > self.length - 1:
+            raise Exception("Index of out bounds")
+        
+        if pos == 0:
+            self.head.value = value
+        else:
+            curr = self.head
+            for i in range(pos):
+                curr = curr.next
+            curr.value = value
 
     def reverse(self):
         '''Reverses the order of the linked list'''
-        pass
+        if self.length <= 1: return
 
+        curr = self.head
+        prev = None
+        while curr is not None:
+            nextNode = curr.next
+            curr.next = prev
+
+            prev = curr
+            curr = nextNode
+
+        self.head = prev
+            
     def __str__(self):
         '''Returns a displayable string format for the linked list'''
 
@@ -129,6 +151,7 @@ class LinkedList:
 
 if __name__=="__main__":
     linkedList = LinkedList()
+    linkedList.appendleft(9)
     linkedList.appendleft(8)
     linkedList.appendleft(7)
     linkedList.appendleft(6)
@@ -138,5 +161,5 @@ if __name__=="__main__":
     linkedList.appendleft(2)
     linkedList.appendleft(1)
     linkedList.appendleft(0)
-    linkedList.insert(11, 1020)
     print(linkedList)
+    
