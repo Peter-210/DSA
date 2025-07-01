@@ -117,6 +117,23 @@ class LinkedList:
                 curr = curr.next
             curr.value = value
 
+    def peek(self):
+        '''Look at the first element in the linked list'''
+        return self.head.value
+    
+    def index(self, pos):
+        '''Look at an element in the linked list based on the specified index'''
+        if pos > self.length - 1:
+            raise Exception("Index of out bounds")
+        
+        if pos == 0:
+            return self.head.value
+        else:
+            curr = self.head
+            for _ in range(pos):
+                curr = curr.next
+            return curr.value
+
     def reverse(self):
         '''Reverses the order of the linked list'''
         if self.length <= 1: return
