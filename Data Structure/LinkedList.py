@@ -8,6 +8,10 @@ class LinkedList:
         self.head = None
         self.length = 0
 
+    def construct(self, arr):
+        for i in range(len(arr)-1, -1, -1):
+            self.appendleft(arr[i])
+
     def appendleft(self, value):
         '''Adds an element to the start of a linked list'''
 
@@ -113,7 +117,7 @@ class LinkedList:
             self.head.value = value
         else:
             curr = self.head
-            for i in range(pos):
+            for _ in range(pos):
                 curr = curr.next
             curr.value = value
 
@@ -168,15 +172,6 @@ class LinkedList:
 
 if __name__=="__main__":
     linkedList = LinkedList()
-    linkedList.appendleft(9)
-    linkedList.appendleft(8)
-    linkedList.appendleft(7)
-    linkedList.appendleft(6)
-    linkedList.appendleft(5)
-    linkedList.appendleft(4)
-    linkedList.appendleft(3)
-    linkedList.appendleft(2)
-    linkedList.appendleft(1)
-    linkedList.appendleft(0)
+    linkedList.construct([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
     print(linkedList)
     
