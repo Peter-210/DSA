@@ -84,10 +84,15 @@ class BinaryTree:
             return values
 
         def balanceTree(values, start, end):
+            if start > end:
+                return
+            
             mid = (start + end) // 2
-            root = Node(storeValues[mid])
-            root.left = balanceTree(start, mid-1)
-            root.right = balanceTree(mid+1, end)
+            root = Node(values[mid])
+
+            root.left = balanceTree(values, start, mid-1)
+            root.right = balanceTree(values, mid+1, end)
+
             return root
 
         storeValues=inOrderStoreValues()
@@ -136,7 +141,9 @@ class BinaryTree:
 
 if __name__ == "__main__":
     tree = BinaryTree()
-    tree.construct([5, 3, 4, 2, 1, 0])
+    tree.construct([5, 3, 4, 2, 1, 6, 0])
+    print(tree)
+    tree.balance()
     print(tree)
     # tree.insert(10)
     # tree.insert(9)
@@ -149,5 +156,4 @@ if __name__ == "__main__":
 TODO:
 Test insert and remove functions
 Fix print function to include None keys
-Test balance
 '''
