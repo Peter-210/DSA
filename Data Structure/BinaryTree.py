@@ -95,56 +95,109 @@ class BinaryTree:
 
             return root
 
-        storeValues=inOrderStoreValues()
+        storeValues = inOrderStoreValues()
         self.root = balanceTree(storeValues, start=0, end=len(storeValues)-1)
 
 
-    def preOrderTraversal():
+    def preOrderTraversal(self):
+        '''Outputs the pathing for a DFS Pre-order Traversal'''
         pass
 
-    def inOrderTraversal():
+    def inOrderTraversal(self):
+        '''Outputs the pathing for a DFS In-order Traversal'''
         pass
 
-    def postOrderTraversal():
+    def postOrderTraversal(self):
+        '''Outputs the pathing for a DFS Post-order Traversal'''
         pass
 
-    def height(self):
-        '''Get the height/depth of the binary tree'''
-        pass
-
-    def __str__(self):
-        '''
-        Returns a displayable string format for the binary tree.
-        Format is in array (sequential) representation where keys are ordered by
-        top to bottom, left to right of the tree.
-        '''
-
+    def BFS(self):
+        '''Outputs the pathing for a BFS / Level Order Traversal'''
         if self.root is None: 
-            return
-        
-        output = ""
+            return ""
+
+        result = ""
         queue = deque()
         queue.append(self.root)
         while queue:
             curr = queue.popleft()
-            output += str(curr.value) + " "
+            result += str(curr.value) + " "
             if curr.left is not None:
                 queue.append(curr.left)
             if curr.right is not None:
                 queue.append(curr.right)
+        return result
+
+    def height(self):
+        '''Get the height/depth of the binary tree'''
+        if self.root is None: 
+            return 0
+
+        depth = 0
+        queue = deque([self.root])
+        while queue:
+            depth += 1
+            for _ in range(len(queue)):
+                curr = queue.popleft()
+                if curr.left:
+                    queue.append(curr.left)
+                if curr.right:
+                    queue.append(curr.right)
+        return depth
+
+    def __str__(self):
+        '''
+        Returns a displayable string format for the binary tree.
+        Nodes in brackets are the children that relate to the parent root node 
+        of a tree/subtree.
+        '''
+
+        # 606. Construct String from Binary Tree
+        # https://leetcode.com/problems/construct-string-from-binary-tree/description/
+
+        if self.root is None: 
+            return
+        
+        def dfs(node):
+            if not node:
+                return ""
             
-        return output
+            output = str(node.value)
+
+            if node.left is not None:
+                output += "(" + dfs(node.left) + ")"
+            if node.right is not None:
+                output += "(" + dfs(node.right) + ")"
+            
+            return output
+        
+        return dfs(self.root)
     
     def __len__(self):
         '''Returns the number of nodes in the binary tree'''
-        return self.length
+        if self.root is None: 
+            return 0
+
+        length = 0
+        queue = deque()
+        queue.append(self.root)
+        while queue:
+            length += 1
+            curr = queue.popleft()
+            if curr.left is not None:
+                queue.append(curr.left)
+            if curr.right is not None:
+                queue.append(curr.right)
+        return length
 
 if __name__ == "__main__":
     tree = BinaryTree()
     tree.construct([5, 3, 4, 2, 1, 6, 0])
     print(tree)
+    print(tree.height())
     tree.balance()
     print(tree)
+    print(tree.height())
     # tree.insert(10)
     # tree.insert(9)
     # tree.insert(11)
@@ -154,6 +207,6 @@ if __name__ == "__main__":
 
 '''
 TODO:
-Test insert and remove functions
 Fix print function to include None keys
+Create a stack variant of balancing the tree
 '''
