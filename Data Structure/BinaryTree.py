@@ -1,3 +1,5 @@
+from collections import deque
+
 class Node:
     def __init__(self, value):
         self.value = value
@@ -7,6 +9,10 @@ class Node:
 class BinaryTree:
     def __init__(self):
         self.root = None
+
+    def construct(self, arr):
+        for value in arr:
+            self.insert(value)
     
     def insert(self, value):
         '''Add the specified element to the binary tree'''
@@ -60,6 +66,41 @@ class BinaryTree:
 
     def balance(self):
         '''Balance the tree as a complete binary tree'''
+        if self.root is None: 
+            return
+ 
+        def inOrderStoreValues():
+            values = []
+            stack = []
+            curr = self.root
+            while curr is not None or stack:
+                if curr is not None:
+                    stack.append(curr)
+                    curr = curr.left
+                else:
+                    curr = stack.pop()
+                    values.append(curr.value)
+                    curr = curr.right
+            return values
+
+        def balanceTree(values, start, end):
+            mid = (start + end) // 2
+            root = Node(storeValues[mid])
+            root.left = balanceTree(start, mid-1)
+            root.right = balanceTree(mid+1, end)
+            return root
+
+        storeValues=inOrderStoreValues()
+        self.root = balanceTree(storeValues, start=0, end=len(storeValues)-1)
+
+
+    def preOrderTraversal():
+        pass
+
+    def inOrderTraversal():
+        pass
+
+    def postOrderTraversal():
         pass
 
     def height(self):
@@ -67,20 +108,46 @@ class BinaryTree:
         pass
 
     def __str__(self):
-        '''Returns a displayable string format for the binary tree'''
+        '''
+        Returns a displayable string format for the binary tree.
+        Format is in array (sequential) representation where keys are ordered by
+        top to bottom, left to right of the tree.
+        '''
 
-        pass
+        if self.root is None: 
+            return
+        
+        output = ""
+        queue = deque()
+        queue.append(self.root)
+        while queue:
+            curr = queue.popleft()
+            output += str(curr.value) + " "
+            if curr.left is not None:
+                queue.append(curr.left)
+            if curr.right is not None:
+                queue.append(curr.right)
+            
+        return output
+    
+    def __len__(self):
+        '''Returns the number of nodes in the binary tree'''
+        return self.length
 
 if __name__ == "__main__":
     tree = BinaryTree()
-    tree.insert(10)
-    tree.insert(9)
-    tree.insert(11)
-    print(tree.root.value)
-    print(tree.root.left.value)
-    print(tree.root.right.value)
+    tree.construct([5, 3, 4, 2, 1, 0])
+    print(tree)
+    # tree.insert(10)
+    # tree.insert(9)
+    # tree.insert(11)
+    # print(tree.root.value)
+    # print(tree.root.left.value)
+    # print(tree.root.right.value)
 
 '''
 TODO:
 Test insert and remove functions
+Fix print function to include None keys
+Test balance
 '''
