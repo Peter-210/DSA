@@ -53,7 +53,24 @@ def mergeSort(arr):
     return result
 
 def quickSort(arr):
-    pass
+    if len(arr) <= 1:
+        return arr
+    
+    mid = len(arr) // 2
+    lowArr = []
+    highArr = []
+    for i in range(len(arr)):
+        if i == mid:
+            continue
+        if arr[i] <= arr[mid]:
+            lowArr.append(arr[i])
+        else:
+            highArr.append(arr[i])
+    
+    left = quickSort(lowArr)
+    right = quickSort(highArr)
+
+    return left + [arr[mid]] + right
 
 def heapSort(arr):
     pass
@@ -67,5 +84,5 @@ def radixSort(arr):
 if __name__=="__main__":
     arr = [9, 1, 4, 2, 6, 4, 7, 9, 10, 11, 2]
     print(arr)
-    arr = bubbleSort(arr)
+    arr = quickSort(arr)
     print(arr)
