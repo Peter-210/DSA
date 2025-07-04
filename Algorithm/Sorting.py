@@ -1,4 +1,7 @@
 def bubbleSort(input):
+    if len(input) <= 1:
+        return input
+    
     arr = input.copy()
     sorted = False
     while not sorted:
@@ -10,6 +13,9 @@ def bubbleSort(input):
     return arr
 
 def insertionSort(input):
+    if len(input) <= 1:
+        return input
+    
     arr = input.copy()
     for i in range(1, len(arr)):
         for j in range(i, -1, -1):
@@ -18,6 +24,9 @@ def insertionSort(input):
     return arr
 
 def selectionSort(input):
+    if len(input) <= 1:
+        return input
+    
     arr = input.copy()
     for i in range(len(arr)-1):
         for j in range(i+1, len(arr)):
@@ -53,9 +62,11 @@ def mergeSort(arr):
     return result
 
 def quickSort(arr):
+    # Check for base case (One element in array)
     if len(arr) <= 1:
         return arr
     
+    # Move low values to the low array and high values to the high array
     mid = len(arr) // 2
     lowArr = []
     highArr = []
@@ -67,6 +78,7 @@ def quickSort(arr):
         else:
             highArr.append(arr[i])
     
+    # Recursively sort low and high arrays
     left = quickSort(lowArr)
     right = quickSort(highArr)
 
@@ -76,13 +88,43 @@ def heapSort(arr):
     pass
 
 def countingSort(arr):
-    pass
+    if len(arr) <= 1:
+        return arr
+    
+    # Get the min and max values
+    min = arr[0]
+    max = arr[0]
+    for value in arr:
+        if value < min:
+            min = value
+        if value > max:
+            max = value
+    
+    # Calculate the offset for the size of counting array
+    offset = min - 0
+    count = [0] * (max - offset + 1)
+
+    # Plot frequencies to counting array
+    for value in arr:
+        idx = value - offset
+        count[idx] += 1
+
+    # Append frequency values to resulting array
+    result = []
+    for value in range(len(count)):
+        while count[value] > 0:
+            result.append(value + offset)
+            count[value] -= 1
+    
+    return result
+
+
 
 def radixSort(arr):
     pass
 
 if __name__=="__main__":
-    arr = [9, 1, 4, 2, 6, 4, 7, 9, 10, 11, 2]
+    arr = [9, -1, 4, 2, 6, 4, 7, 9, 10, -11, 2]
     print(arr)
-    arr = quickSort(arr)
+    arr = countingSort(arr)
     print(arr)
