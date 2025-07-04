@@ -101,17 +101,48 @@ class BinaryTree:
 
     def preOrderTraversal(self):
         '''Outputs the pathing for a DFS Pre-order Traversal'''
-        pass
+        def traverse(node):
+            if node is None:
+                return
+            
+            result.append(node.value)
+            traverse(node.left)
+            traverse(node.right)
+            
+        result = []
+        traverse(self.root)
+        return result
+
 
     def inOrderTraversal(self):
         '''Outputs the pathing for a DFS In-order Traversal'''
-        pass
+        def traverse(node):
+            if node is None:
+                return
+            
+            traverse(node.left)
+            result.append(node.value)
+            traverse(node.right)
+            
+        result = []
+        traverse(self.root)
+        return result
 
     def postOrderTraversal(self):
         '''Outputs the pathing for a DFS Post-order Traversal'''
-        pass
+        def traverse(node):
+            if node is None:
+                return
+            
+            traverse(node.left)
+            traverse(node.right)
+            result.append(node.value)
+            
+        result = []
+        traverse(self.root)
+        return result
 
-    def BFS(self):
+    def bfs(self):
         '''Outputs the pathing for a BFS / Level Order Traversal'''
         if self.root is None: 
             return ""
@@ -152,9 +183,6 @@ class BinaryTree:
         of a tree/subtree.
         '''
 
-        # 606. Construct String from Binary Tree
-        # https://leetcode.com/problems/construct-string-from-binary-tree/description/
-
         if self.root is None: 
             return
         
@@ -193,20 +221,8 @@ class BinaryTree:
 if __name__ == "__main__":
     tree = BinaryTree()
     tree.construct([5, 3, 4, 2, 1, 6, 0])
-    print(tree)
-    print(tree.height())
     tree.balance()
     print(tree)
-    print(tree.height())
-    # tree.insert(10)
-    # tree.insert(9)
-    # tree.insert(11)
-    # print(tree.root.value)
-    # print(tree.root.left.value)
-    # print(tree.root.right.value)
-
-'''
-TODO:
-Fix print function to include None keys
-Create a stack variant of balancing the tree
-'''
+    print(tree.preOrderTraversal())
+    print(tree.inOrderTraversal())
+    print(tree.postOrderTraversal())
