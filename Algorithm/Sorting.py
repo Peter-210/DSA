@@ -1,3 +1,5 @@
+import heapq
+
 def bubbleSort(input):
     if len(input) <= 1:
         return input
@@ -85,7 +87,16 @@ def quickSort(arr):
     return left + [arr[mid]] + right
 
 def heapSort(arr):
-    pass
+    if len(arr) <= 1:
+        return arr
+
+    # Alternative is to swap root with last element for in-place sort
+    result = [0] * len(arr)
+    heapq.heapify(arr)
+    for i in range(len(arr)):
+        result[i] = heapq.heappop(arr)
+    
+    return result
 
 def countingSort(arr):
     if len(arr) <= 1:
@@ -110,6 +121,7 @@ def countingSort(arr):
         count[idx] += 1
 
     # Append frequency values to resulting array
+    # Alternate is to reuse the original array and override the values
     result = []
     for value in range(len(count)):
         while count[value] > 0:
@@ -119,12 +131,8 @@ def countingSort(arr):
     return result
 
 
-
-def radixSort(arr):
-    pass
-
 if __name__=="__main__":
     arr = [9, -1, 4, 2, 6, 4, 7, 9, 10, -11, 2]
     print(arr)
-    arr = countingSort(arr)
+    arr = heapSort(arr)
     print(arr)
